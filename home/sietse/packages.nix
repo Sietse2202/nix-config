@@ -21,26 +21,38 @@
     ];
 
   home.packages = with pkgs; [
-    starship
-    vesktop
-    fastfetch
+    bat
+    bottom
     cosmic-osd
     cosmic-bg
     cosmic-notifications
     cosmic-launcher
     cosmic-files
-    lapce
-    zoxide
-    sd
-    uutils-coreutils-noprefix
+    delta
+    eza
+    fastfetch
+    fish
+    ghostty
+    git
+    helix
     jujutsu
+    jq
+    lapce
+    nushell
     prismlauncher
-    wl-clipboard-rs
-    steam
-    xwayland
-
-    xwayland-satellite
     rip2
+    ripgrep
+    starship
+    sd
+    steam
+    uutils-coreutils-noprefix
+    vesktop
+    wl-clipboard-rs
+    xwayland
+    xwayland-satellite
+    yazi
+    zellij
+    zoxide
   ];
 
   xdg.configFile."niri/config.kdl".source = ./niri.kdl;

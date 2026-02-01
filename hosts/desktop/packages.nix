@@ -3,23 +3,8 @@
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
-    helix
-    git
-    alacritty
-    ghostty
-    ironbar
-    fish
     curl
+    eww
     wget
-    yazi
-    nushell
-    eza
-    delta
-    bat
-    ripgrep
-    zellij
-    jq
-    fastfetch
-    bottom
   ];
 }
