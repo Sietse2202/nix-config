@@ -10,6 +10,7 @@
 
   programs.helix.enable = true;
   programs.home-manager.enable = true;
+  programs.eww.enable = true;
 
   programs.zen-browser = {
     enable = true;
