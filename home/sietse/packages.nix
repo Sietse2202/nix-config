@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./ironbar.nix
     ./vesktop.nix
   ];
 
