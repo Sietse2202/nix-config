@@ -46,6 +46,7 @@
     starship
     sd
     steam
+    ungoogled-chromium # would rather not have this; but sadly neccessary more often than I'd like.
     uutils-coreutils-noprefix
     vesktop
     wl-clipboard-rs
