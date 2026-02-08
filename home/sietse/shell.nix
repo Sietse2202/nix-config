@@ -10,6 +10,7 @@
   programs.nushell = {
     enable = true;
     shellAliases = {
+      dev = "nix develop -c \"nu\"";
       c = "clear";
       q = "exit";
       cat = "bat";
@@ -26,6 +27,7 @@
   programs.fish = {
     enable = true;
     shellAliases = {
+      dev = "nix develop -c \"fish\"";
       c = "clear";
       q = "exit";
       cat = "bat";
