@@ -6,5 +6,6 @@
     curl
     eww
     wget
+    dconf
   ];
 }

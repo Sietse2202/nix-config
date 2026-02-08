@@ -9,4 +9,11 @@
   services.xserver.videoDrivers = ["amdgpu"];
 
   services.displayManager.cosmic-greeter.enable = true;
+
+      programs.dconf.profiles.user.databases = [
+        {
+          lockAll = false;
+          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        }
+      ];
 }
