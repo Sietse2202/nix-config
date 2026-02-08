@@ -12,8 +12,11 @@
   programs.home-manager.enable = true;
   programs.eww.enable = true;
 
-  programs.zen-browser = {
+  programs.delta = {
     enable = true;
+
+    enableGitIntegration = true;
+    enableJujutsuIntegration = true;
   };
 
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -29,7 +32,6 @@
     cosmic-notifications
     cosmic-launcher
     cosmic-files
-    delta
     eza
     fastfetch
     fish
