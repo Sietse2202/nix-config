@@ -6,6 +6,7 @@
   imports = [
     ./vesktop.nix
     ./zen.nix
+    ./ghostty.nix
   ];
 
   programs.helix.enable = true;

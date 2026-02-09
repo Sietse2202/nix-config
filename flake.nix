@@ -72,18 +72,6 @@
         ];
       };
 
-    devShells = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = pkgs.mkShell {
-        packages = with pkgs; [
-          alejandra
-          git
-          radicle-node
-        ];
-      };
-    });
-
     forAllSystems = nixpkgs.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
@@ -99,6 +87,18 @@
     nixosConfigurations = {
       desktop = mkHost "desktop" "x86_64-linux";
     };
+
+    devShells = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
+          alejandra
+          git
+          radicle-node
+        ];
+      };
+    });
 
     formatter = forAllSystems (
       system:
