@@ -1,11 +1,21 @@
-{...}: {
+{
+  config,
+  lib,
+  ...
+}: {
+  xdg.configFile."vesktop/settings/settings.json".source =
+    lib.mkForce config.xdg.configFile."vesktop/settings.json".source;
+
   programs.vesktop = {
     enable = true;
 
     settings = {
       autoUpdate = true;
       autoUpdateNotification = true;
-      useQuickCss = true;
+
+      enabledThemes = [
+        "catppuccin-mocha-lavender.theme.css"
+      ];
 
       eagerPatches = false;
       enableReactDevtools = false;
@@ -14,7 +24,10 @@
       winCtrlQ = false;
       disableMinSize = false;
       winNativeTitleBar = false;
+      minimizeToTray = false;
+      hardwareVideoAcceleration = true;
 
+      # NOTE: I used an LLM to convert my original JSON config to this nix block.
       plugins = {
         ChatInputButtonAPI.enabled = true;
         CommandsAPI.enabled = true;
@@ -174,7 +187,7 @@
         HideMedia.enabled = true;
         iLoveSpam.enabled = false;
         IgnoreActivities.enabled = false;
-        ImageFilename.enabled = false;
+        ImageFilename.enabled = true;
         ImageLink.enabled = true;
 
         ImageZoom = {
@@ -220,7 +233,7 @@
           enableDoubleClickToReply = true;
         };
 
-        MessageLatency.enabled = false;
+        MessageLatency.enabled = true;
 
         MessageLinkEmbeds = {
           enabled = true;
@@ -260,7 +273,7 @@
         };
 
         NewGuildSettings.enabled = false;
-        NoBlockedMessages.enabled = false;
+        NoBlockedMessages.enabled = true;
         NoDefaultHangStatus.enabled = false;
         NoDevtoolsWarning.enabled = true;
         NoF1.enabled = true;
@@ -272,8 +285,8 @@
         };
 
         NoPendingCount.enabled = false;
-        NoProfileThemes.enabled = false;
-        NoReplyMention.enabled = false;
+        NoProfileThemes.enabled = true;
+        NoReplyMention.enabled = true;
         NoRPC.enabled = false;
         NoScreensharePreview.enabled = false;
         NoServerEmojis.enabled = false;
@@ -281,9 +294,9 @@
         NoTypingAnimation.enabled = false;
         NoUnblockToJump.enabled = false;
         NormalizeMessageLinks.enabled = true;
-        NotificationVolume.enabled = false;
+        NotificationVolume.enabled = true;
         NSFWGateBypass.enabled = false;
-        OnePingPerDM.enabled = false;
+        OnePingPerDM.enabled = true;
         oneko.enabled = false;
         OpenInApp.enabled = false;
         OverrideForumDefaults.enabled = false;
@@ -309,7 +322,7 @@
           pinOrder = 0;
         };
 
-        PlainFolderIcon.enabled = false;
+        PlainFolderIcon.enabled = true;
 
         PlatformIndicators = {
           enabled = true;
@@ -407,7 +420,7 @@
         SilentTyping = {
           enabled = true;
           isEnabled = true;
-          showIcon = false;
+          showIcon = true;
           contextMenu = true;
         };
 
