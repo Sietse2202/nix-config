@@ -7,6 +7,7 @@
     ./vesktop.nix
     ./zen.nix
     ./ghostty.nix
+    ./helix.nix
   ];
 
   programs.helix.enable = true;
