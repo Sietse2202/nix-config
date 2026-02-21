@@ -133,8 +133,8 @@
 
         CustomIdle = {
           enabled = true;
-          idleTimeout = 10;
-          remainInIdle = true;
+          idleTimeout = 0;
+          remainInIdle = false;
         };
 
         CustomRPC.enabled = false;
