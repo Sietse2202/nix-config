@@ -37,6 +37,7 @@
     eza
     fastfetch
     fish
+    gh
     ghostty
     git
     helix
