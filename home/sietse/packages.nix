@@ -8,6 +8,7 @@
     ./zen.nix
     ./ghostty.nix
     ./helix.nix
+    ./zellij.nix
   ];
 
   programs.helix.enable = true;
