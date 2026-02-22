@@ -213,6 +213,7 @@
             sponsorblock
             i-dont-care-about-cookies
             indie-wiki-buddy
+            youtube-shorts-block
           ]
           ++ [addons."7tv"];
 
