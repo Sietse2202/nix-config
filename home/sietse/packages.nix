@@ -38,6 +38,7 @@
     eza
     fastfetch
     fish
+    flow-control
     gh
     ghostty
     git

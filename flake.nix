@@ -40,6 +40,18 @@
   } @ inputs: let
     globals = import ./lib/globals.nix;
 
+    overlays.default = final: prev: {
+      flow-control = prev.flow-control.overrideAttrs {
+        version = "0.7.2";
+        src = prev.fetchFromGitHub {
+          owner = "neurocyte";
+          repo = "flow";
+          rev = "v0.7.2";
+          hash = "sha256-...";
+        };
+      };
+    };
+
     mkHost = hostname: system:
       nixpkgs.lib.nixosSystem {
         specialArgs = {

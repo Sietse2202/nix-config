@@ -152,7 +152,7 @@
         Experiments.enabled = false;
         ExpressionCloner.enabled = true;
         F8Break.enabled = false;
-        FakeNitro.enabled = false;
+        FakeNitro.enabled = true;
 
         FakeProfileThemes = {
           enabled = true;

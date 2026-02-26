@@ -1,1 +1,8 @@
-{...}: {}
+{...}: {
+  programs.ghostty = {
+    enable = true;
+
+    settings = {
+    };
+  };
+}
