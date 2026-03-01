@@ -1,5 +1,9 @@
 {...}: {
-  programs.zellij.enable = true;
+  programs.zellij = {
+    enable = true;
+
+    settings.show_startup_tips = false;
+  };
 
   xdg.configFile."zellij/layouts/dev.kdl".text = ''
     layout {

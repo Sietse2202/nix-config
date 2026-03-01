@@ -28,6 +28,11 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    juggler = {
+      url = "git+https://codeberg.org/Sietse2202/juggler.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -36,6 +41,7 @@
     home-manager,
     catppuccin,
     ironbar,
+    juggler,
     ...
   } @ inputs: let
     globals = import ./lib/globals.nix;
@@ -67,6 +73,11 @@
                 "steam"
                 "steam-unwrapped"
               ];
+          }
+          {
+            environment.systemPackages = [
+              juggler.packages.x86_64-linux.default
+            ];
           }
 
           home-manager.nixosModules.home-manager

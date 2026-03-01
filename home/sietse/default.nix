@@ -8,6 +8,7 @@
     ./theme.nix
     ./xdg.nix
     ./shell.nix
+    ./compose.nix
     inputs.zen-browser.homeModules.beta
     inputs.catppuccin.homeModules.default
   ];

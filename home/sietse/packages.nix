@@ -28,6 +28,7 @@
     ];
 
   home.packages = with pkgs; [
+    bacon
     bat
     bottom
     cosmic-osd
