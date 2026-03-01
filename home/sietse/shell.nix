@@ -23,6 +23,13 @@
       mv = "mv -i";
       cp = "cp -i";
     };
+    settings = {
+      show_banner = false;
+      completions.external = {
+        enable = true;
+        max_results = 200;
+      };
+    };
   };
   programs.fish = {
     enable = true;
