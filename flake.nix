@@ -81,10 +81,6 @@
             home-manager.users.${globals.username} = import ./home/${globals.username};
             home-manager.extraSpecialArgs = {inherit inputs globals system;};
             home-manager.backupFileExtension = "hmb";
-
-            home-manager.sharedModules = [
-              ironbar.homeManagerModules.default
-            ];
           }
         ];
       };
