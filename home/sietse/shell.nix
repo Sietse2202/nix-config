@@ -4,7 +4,6 @@
     VISUAL = "hx";
     BROWSER = "zen";
     TERMINAL = "ghostty";
-    DISPLAY = ":0";
   };
 
   programs.nushell = {

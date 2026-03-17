@@ -219,6 +219,7 @@
 
       settings = {
         "extensions.autoDisableScopes" = 0;
+        "zen.view.sidebar-expanded" = false;
       };
     };
   };
