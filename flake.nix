@@ -28,6 +28,13 @@
       url = "git+https://codeberg.org/Sietse2202/juggler.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tidaLuna = {
+      url = "github:Inrixia/TidaLuna";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = {
@@ -36,6 +43,7 @@
     home-manager,
     catppuccin,
     juggler,
+    tidaLuna,
     ...
   } @ inputs: let
     globals = import ./lib/globals.nix;
@@ -66,7 +74,12 @@
               builtins.elem (nixpkgs.lib.getName pkg) [
                 "steam"
                 "steam-unwrapped"
+                "castlabs-electron"
               ];
+
+            nixpkgs.overlays = [
+              inputs.tidaLuna.overlays.default
+            ];
           }
           {
             environment.systemPackages = [

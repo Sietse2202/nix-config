@@ -19,7 +19,6 @@
     };
   };
 
-
   programs.dconf.profiles.user.databases = [
     {
       lockAll = false;

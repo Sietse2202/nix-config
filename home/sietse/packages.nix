@@ -49,6 +49,7 @@
     starship
     sd
     steam
+    tidal-hifi
     ungoogled-chromium # would rather not have this; but sadly neccessary more often than I'd like.
     uutils-coreutils-noprefix
     vesktop
