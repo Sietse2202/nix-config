@@ -58,8 +58,6 @@ window-rule {
 }
 
 spawn-at-startup "eww" "daemon"
-spawn-at-startup "cosmic-notifications"
-spawn-at-startup "cosmic-bg"
 
 hotkey-overlay {
     skip-at-startup
@@ -82,10 +80,10 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
-    Alt+Space hotkey-overlay-title="Run an Application: cosmic-launcher" { spawn "cosmic-launcher"; }
+    Alt+Space hotkey-overlay-title="Run an Application: yofi" { spawn "yofi"; }
     Mod+A hotkey-overlay-title="Open a file manager: yazi" { spawn-sh "ghostty -e yazi ~/"; }
 
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: cosmic-greeter" { spawn "cosmic-greeter-start"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: ly" { spawn "ly"; }
 
     Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 

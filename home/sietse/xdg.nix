@@ -30,15 +30,11 @@
       enable = true;
 
       extraPortals = with pkgs; [
-        xdg-desktop-portal-cosmic
         xdg-desktop-portal-gnome
       ];
 
       config.common = {
-        default = ["cosmic" "gnome"];
-        "org.freedesktop.impl.portal.ScreenCast" = ["gnome"];
-        "org.freedesktop.impl.portal.Screenshot" = ["cosmic"];
-        "org.freedesktop.impl.portal.FileChooser" = ["cosmic"];
+        default = ["gnome"];
       };
     };
   };

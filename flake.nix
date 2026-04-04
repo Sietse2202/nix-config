@@ -35,6 +35,8 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    zig2nix.url = "github:Cloudef/zig2nix";
   };
 
   outputs = {
@@ -44,6 +46,7 @@
     catppuccin,
     juggler,
     tidaLuna,
+    zig2nix,
     ...
   } @ inputs: let
     globals = import ./lib/globals.nix;
@@ -75,11 +78,14 @@
                 "steam"
                 "steam-unwrapped"
                 "castlabs-electron"
+                "idea"
               ];
 
             nixpkgs.overlays = [
               inputs.tidaLuna.overlays.default
             ];
+
+            nix.registry.dev.flake = self;
           }
           {
             environment.systemPackages = [
@@ -117,15 +123,42 @@
 
     devShells = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = pkgs.mkShell {
-        packages = with pkgs; [
-          alejandra
-          git
-          radicle-node
-        ];
-      };
-    });
+
+      zigShells =
+        builtins.mapAttrs
+        (name: shell: shell)
+        zig2nix.devShells.${system};
+
+      prefixedZigShells = builtins.listToAttrs (
+        builtins.map (name: {
+          name = "zig-${name}";
+          value = zig2nix.devShells.${system}.${name};
+        }) (builtins.attrNames zigShells)
+      );
+
+      shellFiles = builtins.readDir ./devshells;
+
+      loadShell = name: let
+        result = import ./devshells/${name} {inherit pkgs;};
+        strippedName = pkgs.lib.removeSuffix ".nix" name;
+      in
+        if pkgs.lib.isDerivation result
+        then {${strippedName} = result;}
+        else result;
+
+      shells =
+        builtins.foldl'
+        (acc: name: acc // loadShell name)
+        {}
+        (builtins.attrNames shellFiles);
+    in
+      shells
+      // prefixedZigShells
+      // {
+        default = pkgs.mkShell {
+          packages = with pkgs; [alejandra git radicle-node];
+        };
+      });
 
     formatter = forAllSystems (
       system:

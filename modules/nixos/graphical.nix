@@ -8,7 +8,19 @@
   };
   services.xserver.videoDrivers = ["amdgpu"];
 
-  services.displayManager.cosmic-greeter.enable = true;
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      animation = "gameoflife";
+      clock = "%c";
+    };
+  };
+
+  console = {
+    earlySetup = true;
+    font = "ter-v28n";
+    packages = [pkgs.terminus_font];
+  };
 
   services.pipewire.wireplumber.extraConfig = {
     "51-bluez-config" = {

@@ -9,7 +9,6 @@
   programs.nushell = {
     enable = true;
     shellAliases = {
-      dev = "nix develop -c \"nu\"";
       c = "clear";
       q = "exit";
       cat = "bat";
@@ -29,11 +28,21 @@
         max_results = 200;
       };
     };
+    extraConfig = ''
+      def dev [lang: string] {
+        nix develop $"dev#($lang)" --command nu
+      }
+    '';
+    environmentVariables = {
+      EDITOR = "hx";
+      VISUAL = "hx";
+      BROWSER = "zen";
+      TERMINAL = "ghostty";
+    };
   };
   programs.fish = {
     enable = true;
     shellAliases = {
-      dev = "nix develop -c \"fish\"";
       c = "clear";
       q = "exit";
       cat = "bat";
@@ -46,6 +55,13 @@
       mv = "mv -i";
       cp = "cp -i";
     };
+    functions = {
+      dev = {
+        body = ''
+          nix develop dev#$argv[1] --command fish
+        '';
+      };
+    };
   };
 
   programs.starship = {
@@ -55,7 +71,7 @@
 
     settings = {
       add_newline = false;
-      format = "$all in $directory(\\($git_branch $git_status\\))\n$character";
+      format = "$all in $directory(\\($git_branch$git_status\\))\n$character";
       right_format = "";
 
       username = {
@@ -79,7 +95,7 @@
       };
 
       git_branch = {
-        format = "[$symbol $branch]($style)";
+        format = "[$symbol$branch]($style)";
         style = "cyan";
         symbol = "";
       };

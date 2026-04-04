@@ -18,7 +18,7 @@
     openssh.authorizedKeys.keys = [];
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [];
-    shell = pkgs.nushell;
+    shell = pkgs.fish;
   };
 
   services.openssh = {
@@ -28,7 +28,6 @@
       PasswordAuthentication = false;
     };
   };
-  services.desktopManager.cosmic.enable = true;
 
   boot.loader = {
     systemd-boot.enable = true;
