@@ -1,0 +1,168 @@
+{
+  description = "My NixOS flake";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    catppuccin.url = "github:catppuccin/nix/release-25.11";
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    juggler = {
+      url = "git+https://codeberg.org/Sietse2202/juggler.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    tidaLuna = {
+      url = "github:Inrixia/TidaLuna";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    zig2nix.url = "github:Cloudef/zig2nix";
+  };
+
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    catppuccin,
+    juggler,
+    tidaLuna,
+    zig2nix,
+    ...
+  } @ inputs: let
+    globals = import ./lib/globals.nix;
+
+    overlays.default = final: prev: {
+      flow-control = prev.flow-control.overrideAttrs {
+        version = "0.7.2";
+        src = prev.fetchFromGitHub {
+          owner = "neurocyte";
+          repo = "flow";
+          rev = "v0.7.2";
+          hash = "sha256-...";
+        };
+      };
+    };
+
+    mkHost = hostname: system:
+      nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs globals system;
+        };
+
+        modules = [
+          ./hosts/${hostname}
+          {imports = builtins.attrValues self.nixosModules;}
+          {
+            nixpkgs.config.allowUnfreePredicate = pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [
+                "steam"
+                "steam-unwrapped"
+                "castlabs-electron"
+                "idea"
+              ];
+
+            nixpkgs.overlays = [
+              inputs.tidaLuna.overlays.default
+            ];
+
+            nix.registry.dev.flake = self;
+          }
+          {
+            environment.systemPackages = [
+              juggler.packages.x86_64-linux.default
+            ];
+          }
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${globals.username} = import ./home/${globals.username};
+            home-manager.extraSpecialArgs = {inherit inputs globals system;};
+            home-manager.backupFileExtension = "hmb";
+          }
+        ];
+      };
+
+    forAllSystems = nixpkgs.lib.genAttrs [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
+  in {
+    nixosModules = {
+      graphical = import ./modules/nixos/graphical.nix;
+      nix-settings = import ./modules/nixos/nix-settings.nix;
+      udev = import ./modules/nixos/udev.nix;
+    };
+
+    nixosConfigurations = {
+      desktop = mkHost "desktop" "x86_64-linux";
+    };
+
+    devShells = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+
+      zigShells =
+        builtins.mapAttrs
+        (name: shell: shell)
+        zig2nix.devShells.${system};
+
+      prefixedZigShells = builtins.listToAttrs (
+        builtins.map (name: {
+          name = "zig-${name}";
+          value = zig2nix.devShells.${system}.${name};
+        }) (builtins.attrNames zigShells)
+      );
+
+      shellFiles = builtins.readDir ./devshells;
+
+      loadShell = name: let
+        result = import ./devshells/${name} {inherit pkgs;};
+        strippedName = pkgs.lib.removeSuffix ".nix" name;
+      in
+        if pkgs.lib.isDerivation result
+        then {${strippedName} = result;}
+        else result;
+
+      shells =
+        builtins.foldl'
+        (acc: name: acc // loadShell name)
+        {}
+        (builtins.attrNames shellFiles);
+    in
+      shells
+      // prefixedZigShells
+      // {
+        default = pkgs.mkShell {
+          packages = with pkgs; [alejandra git radicle-node];
+        };
+      });
+
+    formatter = forAllSystems (
+      system:
+        nixpkgs.legacyPackages.${system}.alejandra
+    );
+  };
+}
